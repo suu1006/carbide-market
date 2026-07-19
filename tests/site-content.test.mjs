@@ -124,6 +124,36 @@ test("responsive CSS handles tablet and narrow mobile layouts", () => {
   assert.match(css, /@media\s*\(max-width:\s*480px\)/, "narrow mobile breakpoint should be defined");
   assert.match(css, /@media\s*\(max-width:\s*768px\)[\s\S]*\.item-showcase/s, "items showcase should be adjusted at tablet size");
   assert.match(css, /@media\s*\(max-width:\s*768px\)[\s\S]*\.case-gallery/s, "case gallery should be adjusted at tablet size");
+  assert.match(
+    css,
+    /@media\s*\(max-width:\s*640px\)[\s\S]*\.slides\s*\{[\s\S]*scroll-snap-type:\s*none/,
+    "mobile pages should use natural scrolling so section edges cannot hide content",
+  );
+  assert.match(
+    css,
+    /@media\s*\(max-width:\s*640px\)[\s\S]*\.slide\s*\{[\s\S]*overflow:\s*visible/,
+    "mobile sections should allow tall content to remain visible",
+  );
+  assert.match(
+    css,
+    /@media\s*\(max-width:\s*640px\)[\s\S]*\.hero-content\s*\{[\s\S]*min-height:\s*max\(100svh,\s*720px\)/,
+    "the mobile hero should grow beyond short viewports when its content needs more room",
+  );
+  assert.match(
+    css,
+    /@media\s*\(max-width:\s*640px\)[\s\S]*h1\s*\{[\s\S]*font-size:\s*clamp\(2\.15rem,\s*11vw,\s*3\.1rem\)/,
+    "the mobile hero heading should fit narrow screens without horizontal clipping",
+  );
+  assert.match(
+    css,
+    /@media\s*\(max-width:\s*640px\)[\s\S]*\.hero-copy,[\s\S]*\.section-copy\s*\{[\s\S]*overflow-wrap:\s*anywhere/,
+    "mobile descriptive text should wrap before it reaches the viewport edge",
+  );
+  assert.match(
+    css,
+    /@media\s*\(max-width:\s*640px\)[\s\S]*\.contact-phone-line\s*\{[\s\S]*flex-wrap:\s*wrap/,
+    "mobile contact numbers should wrap instead of being clipped horizontally",
+  );
 });
 
 test("landing page has core metadata and a project visual asset", () => {

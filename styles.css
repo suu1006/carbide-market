@@ -1283,6 +1283,10 @@ h3 {
 }
 
 @media (max-width: 640px) {
+  html {
+    scroll-padding-top: 112px;
+  }
+
   .site-header {
     padding: 10px 14px;
     gap: 10px;
@@ -1309,6 +1313,12 @@ h3 {
 
   .slide {
     min-height: auto;
+    overflow: visible;
+    scroll-snap-align: none;
+  }
+
+  .slides {
+    scroll-snap-type: none;
   }
 
   .slide-inner {
@@ -1317,11 +1327,20 @@ h3 {
   }
 
   .hero-content {
-    min-height: 100svh;
+    min-height: max(100svh, 720px);
+  }
+
+  .hero-slide {
+    overflow: hidden;
   }
 
   h1 {
-    font-size: clamp(2.35rem, 14vw, 3.6rem);
+    font-size: clamp(2.15rem, 11vw, 3.1rem);
+  }
+
+  .hero-copy,
+  .section-copy {
+    overflow-wrap: anywhere;
   }
 
   h2 {
@@ -1347,6 +1366,26 @@ h3 {
 
   .button {
     width: 100%;
+  }
+
+  .contact-board {
+    padding-bottom: max(64px, env(safe-area-inset-bottom));
+  }
+
+  .contact-phone-line {
+    width: 100%;
+    overflow-x: visible;
+    flex-wrap: wrap;
+    padding: 10px;
+  }
+
+  .contact-phone-line span {
+    width: 100%;
+  }
+
+  .contact-phone-line a {
+    flex: 1 1 100%;
+    justify-content: center;
   }
 
   .category-grid,
@@ -1399,6 +1438,11 @@ h3 {
     padding: 116px 0 46px;
   }
 
+  .hero-content {
+    min-height: max(100svh, 700px);
+    padding-bottom: 56px;
+  }
+
   .market-inner {
     gap: 16px;
   }
@@ -1446,6 +1490,10 @@ h3 {
 
   .case-overlay {
     padding: 16px;
+  }
+
+  .faq-list article {
+    padding: 18px;
   }
 
   .case-labels {
