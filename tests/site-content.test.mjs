@@ -29,6 +29,12 @@ test("single page includes the required buying sections", () => {
   }
 });
 
+test("site branding uses the requested Korean business name", () => {
+  assert.match(html, /<title>우리 폐초경 \| 폐초경 정직 매입<\/title>/, "document title should use 우리 폐초경");
+  assert.match(html, /<strong>우리 폐초경<\/strong>/, "header brand should use 우리 폐초경");
+  assert.doesNotMatch(html, /카바이드마켓/, "old carbide-market branding should be removed");
+});
+
 test("kakao consultation links are wired as external calls to action", () => {
   const kakaoLinks = html.match(/href="https:\/\/(?:pf|open)\.kakao\.com\/[^"]+"/g) ?? [];
   assert.ok(kakaoLinks.length >= 2, "at least two KakaoTalk CTA links should be present");
@@ -141,7 +147,7 @@ test("responsive CSS handles tablet and narrow mobile layouts", () => {
   );
   assert.match(
     css,
-    /@media\s*\(max-width:\s*640px\)[\s\S]*h1\s*\{[\s\S]*font-size:\s*clamp\(2\.15rem,\s*11vw,\s*3\.1rem\)/,
+    /@media\s*\(max-width:\s*640px\)[\s\S]*h1\s*\{[\s\S]*font-size:\s*clamp\(2rem,\s*9vw,\s*2\.65rem\)[\s\S]*overflow-wrap:\s*anywhere/,
     "the mobile hero heading should fit narrow screens without horizontal clipping",
   );
   assert.match(
