@@ -2,6 +2,39 @@ const revealTargets = document.querySelectorAll("[data-reveal]");
 const sections = document.querySelectorAll("[data-section]");
 const navLinks = document.querySelectorAll(".site-nav a");
 const progressBar = document.querySelector(".scroll-progress span");
+const kakaoConsultationLinks = document.querySelectorAll(
+  'a[href="https://pf.kakao.com/_zrufX/chat"]',
+);
+
+let kakaoChatWindow = null;
+let kakaoChatOpening = false;
+
+for (const link of kakaoConsultationLinks) {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    if (kakaoChatOpening) {
+      kakaoChatWindow?.focus();
+      return;
+    }
+
+    kakaoChatOpening = true;
+
+    if (kakaoChatWindow && !kakaoChatWindow.closed) {
+      kakaoChatWindow.focus();
+    } else {
+      kakaoChatWindow = window.open(link.href, "carbide-kakao-consultation");
+
+      if (kakaoChatWindow) {
+        kakaoChatWindow.opener = null;
+      }
+    }
+
+    window.setTimeout(() => {
+      kakaoChatOpening = false;
+    }, 1200);
+  });
+}
 
 const revealObserver = new IntersectionObserver(
   (entries) => {

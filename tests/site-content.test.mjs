@@ -11,6 +11,7 @@ assert.ok(existsSync(indexPath), "index.html should exist");
 
 const html = readFileSync(indexPath, "utf8");
 const css = readFileSync(join(root, "styles.css"), "utf8");
+const script = readFileSync(join(root, "script.js"), "utf8");
 const packageJson = JSON.parse(readFileSync(packagePath, "utf8"));
 
 function readPngSize(path) {
@@ -33,6 +34,16 @@ test("kakao consultation links are wired as external calls to action", () => {
   assert.ok(kakaoLinks.length >= 2, "at least two KakaoTalk CTA links should be present");
   assert.match(html, /target="_blank"/, "external KakaoTalk links should open in a new tab");
   assert.match(html, /rel="noopener"/, "external KakaoTalk links should use noopener");
+});
+
+test("kakao consultation reuses one chat window and ignores rapid repeat clicks", () => {
+  assert.match(script, /kakaoChatOpening/, "Kakao CTA clicks should have a short repeat-click lock");
+  assert.match(
+    script,
+    /window\.open\(link\.href,\s*"carbide-kakao-consultation"\)/,
+    "Kakao CTA clicks should reuse one named chat window",
+  );
+  assert.match(script, /kakaoChatWindow\.focus\(\)/, "an existing Kakao chat window should be focused");
 });
 
 test("contact page keeps consultation phone numbers on one line", () => {
